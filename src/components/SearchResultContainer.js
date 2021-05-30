@@ -42,7 +42,7 @@ class SearchResultContainer extends Component {
               <button className="col col-3">Gender</button>
               <button className="col col-4">Location</button>
             </li>
-            <ResultList results={this.state.results.filter(value => value.name.first.search(this.state.search) !== -1)} />
+            <ResultList results={this.state.results.filter(value => value.name.first.toLowerCase().search(this.state.search.toLowerCase()) !== -1)} />
           </ul>
         </div>
       </div>
