@@ -11,7 +11,6 @@ class SearchResultContainer extends Component {
     results: [],
     search: "",
     state1: false,
-    state2: false
   };
 
   componentDidMount() {
@@ -28,74 +27,20 @@ class SearchResultContainer extends Component {
   };
 
 
-  handleAction = () => {
-    if (this.state.state1 == false) {
-      var b = this.state.shadowResults.sort((a, b) => {
-        var nameA = a.name.first.toUpperCase();
-        var nameB = b.name.first.toUpperCase();
-        if (nameA < nameB) {
-          return -1;
-        }
-        if (nameA > nameB) {
-          return 1;
-        }
-        return 0;
-      })
-      this.setState({ shadowB: b })
-      this.state.state1 = true;
-      return;
-    }
-    if (this.state.state1 == true) {
-      var b = this.state.shadowResults.sort((a, b) => {
-        var nameA = a.name.first.toUpperCase();
-        var nameB = b.name.first.toUpperCase();
-        if (nameA < nameB) {
-          return 1;
-        }
-        if (nameA > nameB) {
-          return -1;
-        }
-        return 0;
-      })
-      this.setState({ shadowB: b })
-      this.state.state1 = false;
-      return;
-    }
-  }
-
-  genderSort = () => {
-    if (this.state.state2 == false) {
-      var c = this.state.shadowResults.sort((a, b) => {
-        var genderA = a.gender.toUpperCase();
-        var genderB = b.gender.toUpperCase();
-        if (genderA <= genderB) {
-          return -1;
-        }
-        if (genderA >= genderB) {
-          return 1;
-        }
-        return 0;
-      })
-      this.setState({ shadowB: c })
-      this.state.state2 = true;
-      return;
-    }
-    if (this.state.state2 == true) {
-      var c = this.state.shadowResults.sort((a, b) => {
-        var genderA = a.gender.toUpperCase();
-        var genderB = b.gender.toUpperCase();
-        if (genderA <= genderB) {
-          return 1;
-        }
-        if (genderA >= genderB) {
-          return -1;
-        }
-        return 0;
-      })
-      this.setState({ shadowB: c })
-      this.state.state2 = false;
-      return;
-    }
+  handleAction = (sortKey) => {
+    var b = this.state.shadowResults.sort((a, b) => {
+      var valueA = sortKey === "name" ? a.name.first.toUpperCase() : a[sortKey].toUpperCase();
+      var valueB = sortKey === "name" ? b.name.first.toUpperCase() : b[sortKey].toUpperCase();
+      if (valueA < valueB) {
+        return this.state.state1 === false ? -1 : 1;
+      }
+      if (valueA > valueB) {
+        return this.state.state1 === false ? 1 : -1;
+      }
+      return 0;
+    })
+    const flipState = !this.state.state1;
+    this.setState({ shadowB: b, state1: flipState });
   }
 
   render() {
@@ -110,12 +55,11 @@ class SearchResultContainer extends Component {
           <ul className="responsive-table">
             <li className="table-header">
               <button className="col col-1">Picture</button>
-              <button onClick={this.handleAction} className="col col-2">Name</button>
-              <button onClick={this.genderSort} className="col col-3">Gender</button>
+              <button onClick={() => this.handleAction("name")} className="col col-2">Name</button>
+              <button onClick={() => this.handleAction("gender")} className="col col-3">Gender</button>
               <button className="col col-4">Location</button>
             </li>
             <ResultList
-              results={this.state.results.filter(value => value.name.first.toLowerCase().search(this.state.search.toLowerCase()) !== -1)}
               shadowResults={this.state.shadowResults.filter(value => value.name.first.toLowerCase().search(this.state.search.toLowerCase()) !== -1)} />
           </ul>
         </div>

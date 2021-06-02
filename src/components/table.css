@@ -50,7 +50,7 @@ body {
   }
   @media all and (max-width: 767px) {
     .responsive-table .table-header {
-      display: none;
+      /* display: none; */
     }
     .responsive-table li {
       display: block;

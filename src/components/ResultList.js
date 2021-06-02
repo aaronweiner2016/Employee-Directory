@@ -13,9 +13,9 @@ function ResultList(props) {
       {props.shadowResults.map(result => (
         <li className="table-row" key={result.login.uuid}>
           <img className="col col-1" data-label="Job Id" src={result.picture.medium} />
-          <div className="col col-2 d-flex justify-content-center" data-label="Customer Name">{result.name.first} {result.name.last}</div>
-          <div className="col col-3 d-flex justify-content-center" data-label="Amount">{result.gender}</div>
-          <div className="col col-4 d-flex justify-content-center" data-label="Payment Status">{result.location.city}</div>
+          <div className="col col-2 d-flex justify-content-center" data-label="Name">{result.name.first} {result.name.last}</div>
+          <div className="col col-3 d-flex justify-content-center" data-label="Gender">{result.gender}</div>
+          <div className="col col-4 d-flex justify-content-center" data-label="Location">{result.location.city}</div>
         </li>
       ))}
     </ul>
